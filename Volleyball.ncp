@@ -1,0 +1,377 @@
+<Project>
+  <Name>Volleyball</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>IVF</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>IVF</Name>
+        <Access>Public</Access>
+        <Location left="224" top="148" />
+        <Size width="388" height="179" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly ISerilizer _serilizer</Member>
+        <Member type="Field">private readonly ILinqService _linqService</Member>
+        <Member type="Field">private readonly IRemoteFile _remoteFile</Member>
+        <Member type="Field">public PersistentService Persistent</Member>
+        <Member type="Property">public Guid Id { get; set; }</Member>
+        <Member type="Constructor">public IVF(ISerilizer serilizer, ILinqService linqService, IRemoteFile remoteFile)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ClientObjectManager</Name>
+        <Access>Public</Access>
+        <Location left="224" top="452" />
+        <Size width="199" height="145" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public Player GetPlayerDataFromClient()</Member>
+        <Member type="Method">public Team GetTeamDataFromClient()</Member>
+        <Member type="Method">public Coach GetCoachDataFromClient()</Member>
+        <Member type="Method">public Match GetMatchDataFromClient()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>1  what about dependensy of ClientObjectManager &amp; IvfManager?
+
+2 Where I need to write "save object" ?
+
+3 </Text>
+        <Location left="35" top="163" />
+        <Size width="160" height="239" />
+      </Entity>
+      <Entity type="Class">
+        <Name>IvfManager</Name>
+        <Access>Public</Access>
+        <Location left="466" top="465" />
+        <Size width="602" height="145" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public Player DeclarePlayer(string name, int age, int number, int height, string amplua, int phonenumber, string mail)</Member>
+        <Member type="Method">public Team DeclareTeam(string name, int league)</Member>
+        <Member type="Method">public Coach DeclareCoach(string name, int phonenumber, string mail)</Member>
+        <Member type="Method">public Match DeclareMatch(string team1, string team2)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships />
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Volleyball.exe</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Interface">
+        <Name>IModel</Name>
+        <Access>Public</Access>
+        <Location left="1189" top="632" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">Guid Id { get; set; }</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>ILinqService</Name>
+        <Access>Public</Access>
+        <Location left="436" top="606" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">IModel GetById(Guid id, List&lt;IModel&gt; objList)</Member>
+        <Member type="Method">Void DeleteById(Guid id, List&lt;IModel&gt; objList)</Member>
+        <Member type="Method">Void UpdateById(IModel obj, List&lt;IModel&gt; objList)</Member>
+        <Member type="Method">Void Save(IModel obj, List&lt;IModel&gt; objList)</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IRemoteFile</Name>
+        <Access>Public</Access>
+        <Location left="224" top="606" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">String ReadFileData(String path)</Member>
+        <Member type="Method">Void WriteFileData(String path, String content)</Member>
+        <Member type="Method">Void AppendAllText(String path, String content)</Member>
+      </Entity>
+      <Entity type="Interface">
+        <Name>ISerilizer</Name>
+        <Access>Public</Access>
+        <Location left="12" top="606" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">T DeSerilize(String objStr)</Member>
+        <Member type="Method">String Serilize(Object obj)</Member>
+      </Entity>
+      <Entity type="Class">
+        <Name>MainIOC</Name>
+        <Access>Public</Access>
+        <Location left="1117" top="19" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public MainIOC()</Member>
+        <Member type="Method">public Void Install(IWindsorContainer container, IConfigurationStore store)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Coach</Name>
+        <Access>Public</Access>
+        <Location left="1493" top="935" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public String Name</Member>
+        <Member type="Field">public Guid TeamId</Member>
+        <Member type="Field">public Int32 PhoneNumber</Member>
+        <Member type="Field">public MailAddress Mail</Member>
+        <Member type="Field">public DateTime Date</Member>
+        <Member type="Property">public Guid Id { get; set; }</Member>
+        <Member type="Constructor">public Coach()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>IVF</Name>
+        <Access>Public</Access>
+        <Location left="661" top="35" />
+        <Size width="162" height="247" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly ISerilizer _serilizer</Member>
+        <Member type="Field">private readonly ILinqService _linqService</Member>
+        <Member type="Field">private readonly IRemoteFile _remoteFile</Member>
+        <Member type="Field">public PersistentService Persistent</Member>
+        <Member type="Property">public Guid Id { get; set; }</Member>
+        <Member type="Constructor">public IVF(ISerilizer serilizer, ILinqService linqService, IRemoteFile remoteFile)</Member>
+        <Member type="Method">public Player DeclarePlayer(String name, Int32 age, Int32 number, Int32 height, String amplua, Int32 phonenumber, String mail)</Member>
+        <Member type="Method">public Player CreatePlayerByClientData()</Member>
+        <Member type="Method">public Team DeclareTeam(String name, Int32 league)</Member>
+        <Member type="Method">public Team CreateTeamByClientData()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Match</Name>
+        <Access>Public</Access>
+        <Location left="1307" top="935" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public Guid Team1Id</Member>
+        <Member type="Field">public Guid Team2Id</Member>
+        <Member type="Field">public DateTime Date</Member>
+        <Member type="Property">public Guid Id { get; set; }</Member>
+        <Member type="Constructor">public Match()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LinqService</Name>
+        <Access>Public</Access>
+        <Location left="467" top="881" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public LinqService()</Member>
+        <Member type="Method">public IModel GetById(Guid id, List&lt;IModel&gt; objList)</Member>
+        <Member type="Method">public Void DeleteById(Guid id, List&lt;IModel&gt; objList)</Member>
+        <Member type="Method">public Void UpdateById(IModel obj, List&lt;IModel&gt; objList)</Member>
+        <Member type="Method">public Void Save(IModel obj, List&lt;IModel&gt; objList)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>PersistentService</Name>
+        <Access>Public</Access>
+        <Location left="86" top="19" />
+        <Size width="454" height="213" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private readonly ISerilizer _serilizer</Member>
+        <Member type="Field">private readonly ILinqService _linqService</Member>
+        <Member type="Field">private readonly IRemoteFile _remoteFile</Member>
+        <Member type="Constructor">public PersistentService(ISerilizer serilizer, ILinqService linqService, IRemoteFile remoteFile)</Member>
+        <Member type="Method">public Void Saveobject(T obj, String path)</Member>
+        <Member type="Method">public IModel GetobjById(Guid id, String path)</Member>
+        <Member type="Method">public Void DeleteodjfromData(Guid id, String path)</Member>
+        <Member type="Method">public Void UpdateobjinData(IModel obj, String path)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>RemoteFile</Name>
+        <Access>Public</Access>
+        <Location left="238" top="898" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public RemoteFile()</Member>
+        <Member type="Method">public String ReadFileData(String path)</Member>
+        <Member type="Method">public Void WriteFileData(String path, String content)</Member>
+        <Member type="Method">public Void AppendAllText(String path, String content)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Player</Name>
+        <Access>Public</Access>
+        <Location left="838" top="935" />
+        <Size width="162" height="247" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public String Name</Member>
+        <Member type="Field">public Int32 Age</Member>
+        <Member type="Field">public Int32 Number</Member>
+        <Member type="Field">public Int32 Height</Member>
+        <Member type="Field">public String Amplua</Member>
+        <Member type="Field">public Int32 PhoneNumber</Member>
+        <Member type="Field">public String Mail</Member>
+        <Member type="Field">public DateTime Date</Member>
+        <Member type="Property">public Guid Id { get; set; }</Member>
+        <Member type="Constructor">public Player()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Program</Name>
+        <Access>Internal</Access>
+        <Location left="926" top="19" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Program()</Member>
+        <Member type="Method">private static Void Main(String[] args)</Member>
+        <Member type="Method">private static IWindsorContainer CreateWindsorContainer()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Serilizer</Name>
+        <Access>Public</Access>
+        <Location left="12" top="881" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Serilizer()</Member>
+        <Member type="Method">public T DeSerilize(String objStr)</Member>
+        <Member type="Method">public String Serilize(Object obj)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Statistics</Name>
+        <Access>Public</Access>
+        <Location left="1740" top="128" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public Guid Id</Member>
+        <Member type="Constructor">public Statistics()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Team</Name>
+        <Access>Public</Access>
+        <Location left="1085" top="935" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public String Name</Member>
+        <Member type="Field">public Int32 League</Member>
+        <Member type="Field">public DateTime Date</Member>
+        <Member type="Property">public Guid Id { get; set; }</Member>
+        <Member type="Constructor">public Team()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Realization" first="5" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="6" second="0">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>878</X>
+          <Y>266</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Realization" first="7" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="8" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="10" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="11" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="13" second="3">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Realization" first="15" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="6" second="3">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_serilizer</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="6" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>807</X>
+          <Y>307</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_linqService</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="6" second="2">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>685</X>
+          <Y>311</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_remoteFile</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="9" second="3">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_serilizer</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="9" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_linqService</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Association" first="9" second="2">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <StartRole>_remoteFile</StartRole>
+        <EndMultiplicity>1</EndMultiplicity>
+      </Relationship>
+      <Relationship type="Dependency" first="6" second="9">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>623</X>
+          <Y>110</Y>
+        </BendPoint>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>

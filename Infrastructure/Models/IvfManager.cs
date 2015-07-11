@@ -1,8 +1,7 @@
 ﻿using System;
-using Volleyball.Models;
-using Volleyball.Services;
+using VB.Infrastructure.Services;
 
-namespace Volleyball
+namespace VB.Infrastructure.Models
 {
     public class IvfManager: IModel
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Volleyball.Services
+namespace VB.Infrastructure.Services
 {
     public class Serializer : ISerializer
     {

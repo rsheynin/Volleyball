@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
-using Volleyball.Models;
-using Volleyball.Services;
+using VB.Infrastructure.Models;
+using VB.Infrastructure.Services;
 
-namespace VolleyballTests
+namespace VB.Infrastructure.Tests
 {
     [TestClass]
     public class PersistentServiceTest
@@ -15,8 +15,11 @@ namespace VolleyballTests
         private ILinqService _stubLinqService;
         private IRemoteFile _stubRemoteFile;
         private Guid _id;
-        private string _oneModelListString;
+        private const string StringToDesirialize = "_stringToDesirialize";
+        private const string SerializedString = "_serializedString";
+
         private IModel _stubModel;
+        private List<IModel> _modelList = new List<IModel>();
         private const string Path = "File Path";
         private const string FileEmptyListString = "[]";
 
@@ -58,14 +61,14 @@ namespace VolleyballTests
         [TestMethod]
         public void GetobjById_IDExistInPersistent_ReturnModel()
         {
-            _oneModelListString = "[{\"Id\":"+_id+"}]";
+           var stringToDesirialize = "[{\"Id\":"+_id+"}]";
             _stubRemoteFile.Stub(x => x
                 .ReadFileData(Path))
-                .Return(_oneModelListString);
+                .Return(stringToDesirialize);
 
             var modelList = new List<IModel> { _stubModel };
             _stubSerializer.Stub(x => x
-                .DeSerialize<List<IModel>>(_oneModelListString))
+                .DeSerialize<List<IModel>>(stringToDesirialize))
                 .Return(modelList);
 
             _stubLinqService.Stub(x => x
@@ -82,11 +85,11 @@ namespace VolleyballTests
         {
             _stubRemoteFile.Stub(x => x
                 .ReadFileData(Path))
-                .Return(_oneModelListString);
+                .Return(StringToDesirialize);
 
             var modelList = new List<IModel> { _stubModel };
             _stubSerializer.Stub(x => x
-                .DeSerialize<List<IModel>>(_oneModelListString))
+                .DeSerialize<List<IModel>>(StringToDesirialize))
                 .Return(modelList);
 
                _stubLinqService.Expect(x => x
@@ -102,11 +105,11 @@ namespace VolleyballTests
         {
             _stubRemoteFile.Expect(x => x
                 .ReadFileData(Path))
-                .Return(_oneModelListString);
+                .Return(StringToDesirialize);
 
             var modelList = new List<IModel> { _stubModel };
             _stubSerializer.Stub(x => x
-                .DeSerialize<List<IModel>>(_oneModelListString))
+                .DeSerialize<List<IModel>>(StringToDesirialize))
                 .Return(modelList);
 
                _stubLinqService.Stub(x => x
@@ -122,11 +125,11 @@ namespace VolleyballTests
         {
             _stubRemoteFile.Stub(x => x
                 .ReadFileData(Path))
-                .Return(_oneModelListString);
+                .Return(StringToDesirialize);
 
             var modelList = new List<IModel> { _stubModel };
             _stubSerializer.Expect(x => x
-                .DeSerialize<List<IModel>>(_oneModelListString))
+                .DeSerialize<List<IModel>>(StringToDesirialize))
                 .Return(modelList);
 
                _stubLinqService.Stub(x => x
@@ -142,11 +145,11 @@ namespace VolleyballTests
         {
             _stubRemoteFile.Stub(x => x
                .ReadFileData(Path))
-               .Return(_oneModelListString);
+               .Return(StringToDesirialize);
 
             var modelList = new List<IModel> { _stubModel };
             _stubSerializer.Stub(x => x
-                .DeSerialize<List<IModel>>(_oneModelListString))
+                .DeSerialize<List<IModel>>(StringToDesirialize))
                 .Return(modelList);
 
             _stubLinqService.Expect(x => x
@@ -162,11 +165,11 @@ namespace VolleyballTests
          {
             _stubRemoteFile.Expect(x => x
                .ReadFileData(Path))
-               .Return(_oneModelListString);
+               .Return(StringToDesirialize);
 
             var modelList = new List<IModel> { _stubModel };
             _stubSerializer.Stub(x => x
-                .DeSerialize<List<IModel>>(_oneModelListString))
+                .DeSerialize<List<IModel>>(StringToDesirialize))
                 .Return(modelList);
 
             _stubLinqService.Stub(x => x
@@ -182,11 +185,11 @@ namespace VolleyballTests
         {
             _stubRemoteFile.Stub(x => x
                .ReadFileData(Path))
-               .Return(_oneModelListString);
+               .Return(StringToDesirialize);
 
             var modelList = new List<IModel> { _stubModel };
             _stubSerializer.Expect(x => x
-                .DeSerialize<List<IModel>>(_oneModelListString))
+                .DeSerialize<List<IModel>>(StringToDesirialize))
                 .Return(modelList);
 
             _stubLinqService.Stub(x => x
@@ -198,7 +201,7 @@ namespace VolleyballTests
         } 
         
         [TestMethod]
-        public void Saveobject_RemoteFile()
+        public void Saveobject_FileIsEmptySaveInNewObj()
         {
             _stubRemoteFile.Expect(x => x
                 .ReadFileData(Path))
@@ -206,7 +209,7 @@ namespace VolleyballTests
 
             var modelList = new List<IModel> { _stubModel };
 
-            _stubSerializer.Stub(x => x
+            _stubSerializer    .Stub(x => x
                 .DeSerialize<List<IModel>>(FileEmptyListString))
                 .Return(modelList);
 
@@ -217,26 +220,31 @@ namespace VolleyballTests
         } 
         
         [TestMethod]
-        public void Saveobject_FileIsEmptySaveInNewObj()
+        public void Saveobject_FileExist_AddToFile()
         {
+            
             _stubRemoteFile.Stub(x => x
                 .ReadFileData(Path))
-                .Return("[]");
-            
-            var objList = new List<IModel>
-            {
-                _stubModel
-            };
+                .Return(StringToDesirialize);
 
-            var objString = "SerializedObj";
+
+            _stubSerializer.Expect(x => x
+               .DeSerialize<List<IModel>>(StringToDesirialize))
+               .Return(_modelList);
+
+            _modelList.Add(_stubModel);
+
             _stubSerializer.Stub(x => x
-                .Serialize(objList))
-                .Return(objString);
-          
+                .Serialize(_modelList))
+                .Return(SerializedString);
+
+            //_stubRemoteFile.Stub(x => x
+            //    .WriteFileData(Path, SerializedString));
+
             _target.Saveobject(_stubModel, Path);
 
             _stubRemoteFile.AssertWasCalled(x => x
-                .WriteFileData(Path, "SerializedObj"));
+                .WriteFileData(Path, SerializedString));
 
         }
 
@@ -255,7 +263,7 @@ namespace VolleyballTests
 //        [TestMethod]
 //        public void Saveobject_FileExist()
 //        {
-//            string str = _oneModelListString;
+//            string str = _stringToDesirialize;
 //
 //            _stubRemoteFile.Stub(x => x
 //                           .ReadFileData(Path))

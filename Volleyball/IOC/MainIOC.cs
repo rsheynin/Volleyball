@@ -2,9 +2,9 @@
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using Volleyball.Services;
+using VB.Infrastructure.Services;
 
-namespace Volleyball.IOC
+namespace VB.Console.IOC
 {
     [ExcludeFromCodeCoverage]
     public class MainIOC : IWindsorInstaller

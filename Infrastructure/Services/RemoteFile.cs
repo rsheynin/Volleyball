@@ -1,6 +1,6 @@
-﻿ using System.IO;
+﻿using System.IO;
 
-namespace Volleyball.Services
+namespace VB.Infrastructure.Services
 {
     public class RemoteFile: IRemoteFile
     {

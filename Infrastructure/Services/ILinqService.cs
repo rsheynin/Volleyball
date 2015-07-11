@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Volleyball.Models;
+using VB.Infrastructure.Models;
 
-namespace Volleyball.Services
+namespace VB.Infrastructure.Services
 {
     public interface ILinqService
     {

@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Mail;
 
-namespace Volleyball.Models
+namespace VB.Infrastructure.Models
 {
   [ExcludeFromCodeCoverage]
   public class Coach : IModel

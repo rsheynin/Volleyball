@@ -7,8 +7,8 @@
     <ProjectGuid>{51B431CC-100B-4AC1-9F56-614D090F89C3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wpfvolley</RootNamespace>
-    <AssemblyName>Wpfvolley</AssemblyName>
+    <RootNamespace>VB.Wpf</RootNamespace>
+    <AssemblyName>VB.Wpf</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

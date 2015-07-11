@@ -1,33 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Volleyball.Models;
-using Volleyball.Services;
+using System.IO;
+using VB.Infrastructure.Services;
 
-namespace Volleyball
+namespace VB.Infrastructure.Models
 {
     [ExcludeFromCodeCoverage]
     public class ClientManager: IModel
     {
 
         private readonly ISerializer _serializer;
-        private readonly ILinqService _linqService;
         private readonly IRemoteFile _remoteFile;
 
        public ClientManager (ISerializer serializer, ILinqService linqService, IRemoteFile remoteFile)
         {
-            _serializer = serializer;
-            _linqService = linqService;
-            _remoteFile = remoteFile;
+           _serializer = serializer;
+           _remoteFile = remoteFile;
             Id = Guid.NewGuid();
-            Persistent = new PersistentService(serializer, _linqService, remoteFile);
+            Persistent = new PersistentService(serializer, linqService, remoteFile);
         }
         public Guid Id { get; set; } 
         public PersistentService Persistent;
 
+        /// <exception cref="IOException">An I/O error occurred. </exception>
+        /// <exception cref="OutOfMemoryException">There is insufficient memory to allocate a buffer for the returned string. </exception>
+        /// <exception cref="ArgumentOutOfRangeException">The number of characters in the next line of characters is greater than <see cref="F:System.Int32.MaxValue" />.</exception>
+        /// <exception cref="OverflowException"><paramref name="value" /> represents a number that is less than <see cref="F:System.Int32.MinValue" /> or greater than <see cref="F:System.Int32.MaxValue" />. </exception>
         public Player CreatePlayerByClientData()
         {
             Console.WriteLine("Enter full player Name, please");
@@ -57,6 +55,10 @@ namespace Volleyball
         }
 
 
+        /// <exception cref="IOException">An I/O error occurred. </exception>
+        /// <exception cref="OutOfMemoryException">There is insufficient memory to allocate a buffer for the returned string. </exception>
+        /// <exception cref="FormatException"><paramref name="value" /> does not consist of an optional sign followed by a sequence of digits (0 through 9). </exception>
+        /// <exception cref="OverflowException"><paramref name="value" /> represents a number that is less than <see cref="F:System.Int32.MinValue" /> or greater than <see cref="F:System.Int32.MaxValue" />. </exception>
         public Team CreateTeamByClientData()
         {
             Console.WriteLine("Enter full team Name, please");

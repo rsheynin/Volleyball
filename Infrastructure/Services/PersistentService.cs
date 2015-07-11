@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using Volleyball.Models;
 using System.Linq;
+using VB.Infrastructure.Models;
 
-namespace Volleyball.Services
+namespace VB.Infrastructure.Services
 {
     public interface IPersistentService
     {
+        void Saveobject<T>(T obj, string path);
+
+        IModel GetobjById<T>(Guid id, string path);
+
+        void DeleteObjfromData<T>(Guid id, string path);
+
+        void UpdateObjinData<T>(IModel obj, string path);
     }
 
     public class PersistentService : IPersistentService
@@ -26,6 +33,7 @@ namespace Volleyball.Services
 
         public void Saveobject<T>(T obj, string path)
         {
+            
             var str = _remoteFile.ReadFileData(path);
             List<T> objList;
             if (str == "[]")

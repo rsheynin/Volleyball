@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Volleyball.Models;
+using VB.Infrastructure.Models;
 
-namespace Volleyball.Services
+namespace VB.Infrastructure.Services
 {
     public class LinqService: ILinqService
     {

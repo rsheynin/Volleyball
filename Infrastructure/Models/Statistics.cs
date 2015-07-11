@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Volleyball
+namespace VB.Infrastructure.Models
 {
     public class Statistics
     {

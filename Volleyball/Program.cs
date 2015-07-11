@@ -1,11 +1,11 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
-using Volleyball.IOC;
-using Volleyball.Services;
+using VB.Console.IOC;
+using VB.Infrastructure.Models;
+using VB.Infrastructure.Services;
 
-namespace Volleyball
+namespace VB.Console
 {
     [ExcludeFromCodeCoverage]
     class Program
@@ -25,7 +25,7 @@ namespace Volleyball
 //            ivf.Persistent.UpdateobjinData<P layer>(player, "player.json");
 //            ivf.Persistent.DeleteodjfromData<Player>(player.Id, "player.json");
 
-            Console.ReadKey(); 
+            System.Console.ReadKey(); 
         }
 
         private static IWindsorContainer CreateWindsorContainer()

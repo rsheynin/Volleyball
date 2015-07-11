@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Volleyball", "Volleyball\Volleyball.csproj", "{FFC7F851-42B4-463F-95BE-03AAAB9116E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VB.Console", "Volleyball\VB.Console.csproj", "{FFC7F851-42B4-463F-95BE-03AAAB9116E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VolleyballTests", "VolleyballTests\VolleyballTests.csproj", "{82D1529C-F6E9-4A13-BF27-B9A78DEF7819}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VB.Infrastructure.Tests", "VolleyballTests\VB.Infrastructure.Tests.csproj", "{82D1529C-F6E9-4A13-BF27-B9A78DEF7819}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{23CD8E12-F2DA-44ED-9B78-9BF46784F333}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VB.Infrastructure", "Infrastructure\VB.Infrastructure.csproj", "{23CD8E12-F2DA-44ED-9B78-9BF46784F333}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpfvolley", "Wpfvolley\Wpfvolley.csproj", "{51B431CC-100B-4AC1-9F56-614D090F89C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VB.Wpf", "Wpfvolley\VB.Wpf.csproj", "{51B431CC-100B-4AC1-9F56-614D090F89C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

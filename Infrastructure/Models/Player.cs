@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Net.Mail;
 
-namespace Volleyball.Models
+namespace VB.Infrastructure.Models
 {
     public class Player : IModel
     {

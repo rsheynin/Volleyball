@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Volleyball.Models;
-using Volleyball.Services;
+using VB.Infrastructure.Models;
+using VB.Infrastructure.Services;
 
-namespace VolleyballTests
+namespace VB.Infrastructure.Tests
 {
     [TestClass]
     public class SerializerTest

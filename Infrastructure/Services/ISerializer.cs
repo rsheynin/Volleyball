@@ -1,4 +1,4 @@
-﻿namespace Volleyball.Services
+﻿namespace VB.Infrastructure.Services
 {
     public interface ISerializer
     {

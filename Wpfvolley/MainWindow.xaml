@@ -124,6 +124,7 @@
             VerticalAlignment="Bottom"/>
 
         <ComboBox 
+            Name="Amplua"
             Grid.Column="1"
             HorizontalAlignment="Left"
             Margin="5"

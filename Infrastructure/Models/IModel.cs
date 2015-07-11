@@ -1,6 +1,6 @@
 using System;
 
-namespace Volleyball.Models
+namespace VB.Infrastructure.Models
 {
     public interface IModel
     {

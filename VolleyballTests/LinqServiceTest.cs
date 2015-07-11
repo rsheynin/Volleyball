@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Volleyball.Models;
-using Volleyball.Services;
+using VB.Infrastructure.Models;
+using VB.Infrastructure.Services;
 
-namespace VolleyballTests
+namespace VB.Infrastructure.Tests
 {
     [TestClass]
     public class LinqServiceTest

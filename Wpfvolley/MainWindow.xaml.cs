@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Wpfvolley
+namespace VB.Wpf
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -40,3 +40,4 @@ namespace Wpfvolley
         }
     }
 }
+

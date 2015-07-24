@@ -2,6 +2,9 @@
 
 namespace VB.Infrastructure.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Serializer : ISerializer
     {
 

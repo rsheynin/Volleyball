@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using VB.Console.IOC;
@@ -14,13 +15,29 @@ namespace VB.Console
         {
 
             var container = CreateWindsorContainer();
-            var serializer = container.Resolve<ISerializer>();
-            var linqService = container.Resolve<ILinqService>();
-            var remoteFile = container.Resolve<IRemoteFile>();
+            //var serializer = container.Resolve<ISerializer>();
+            //var linqService = container.Resolve<ILinqService>();
+            //var remoteFile = container.Resolve<IRemoteFile>();
+            //var persistentService = container.Resolve<IPersistentService>();
+            var ivfmanager = container.Resolve<IIVFManager>();
 
-            var clientmanager = new ClientManager(serializer,linqService,remoteFile);
-            var player = clientmanager.CreatePlayerByClientData();
-            var team = clientmanager.CreateTeamByClientData();
+
+
+            
+            var clientmanager = new ClientManager(ivfmanager);
+
+            //clientmanager.CreateMatchByClientData();
+            clientmanager.CreateCoachByClientData();
+
+            //clientmanager.GetMatchById();
+            //clientmanager.GetMatchByDate();
+
+
+
+            //clientmanager.GetMatchByTeamName();
+
+            //var player = clientmanager.CreatePlayerByClientData();
+            //var team = clientmanager.CreateTeamByClientData();
 
 //            ivf.Persistent.UpdateobjinData<P layer>(player, "player.json");
 //            ivf.Persistent.DeleteodjfromData<Player>(player.Id, "player.json");

@@ -2,6 +2,9 @@
 
 namespace VB.Infrastructure.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RemoteFile: IRemoteFile
     {
         /// <summary>
@@ -19,7 +22,7 @@ namespace VB.Infrastructure.Services
         }
 
         /// <summary>
-        /// Overrride file content if file exist else create file and write the string
+        /// Override file content if file exist else create file and write the string
         /// </summary>
         /// <param name="path"></param>
         /// <param name="content"></param>

@@ -5,10 +5,13 @@ using VB.Infrastructure.Models;
 
 namespace VB.Infrastructure.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class LinqService: ILinqService
     {
         /// <summary>
-        /// Get object by Id from colection
+        /// Get object by Id from collection
         /// </summary>
         /// <param name="id"></param>
         /// <param name="objList"></param>
@@ -18,6 +21,19 @@ namespace VB.Infrastructure.Services
             var obj = objList.FirstOrDefault(x => x.Id == id);
             return obj;
         }
+
+        /// <summary>
+        /// Get object by name from collection
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="objList"></param>
+        /// <returns></returns>
+        public IModel GetByName(string name, List<IModel> objList)
+        {
+            var obj = objList.FirstOrDefault(x => x.Name == name);
+            return obj;
+        }
+
 
         /// <summary>
         /// delete object from list
@@ -32,7 +48,7 @@ namespace VB.Infrastructure.Services
         }
 
         /// <summary>
-        /// Update concrete objec by id 
+        /// Update concrete object by id 
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="objList"></param>

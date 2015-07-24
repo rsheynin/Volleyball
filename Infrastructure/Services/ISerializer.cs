@@ -1,5 +1,8 @@
 ﻿namespace VB.Infrastructure.Services
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ISerializer
     {
         /// <summary>

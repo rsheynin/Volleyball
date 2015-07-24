@@ -8,12 +8,11 @@ namespace VB.Infrastructure.Models
   public class Coach : IModel
     {
         public Guid Id { get; set; }
-        public string Name;
+        public string Name { get; set; }
+
         public Guid TeamId;
-        public int PhoneNumber;
-        public MailAddress Mail;
-
+        public string PhoneNumber;
+        public string Mail;
         public DateTime Date;
-
     }
 }

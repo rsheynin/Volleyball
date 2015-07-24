@@ -5,17 +5,6 @@ using VB.Infrastructure.Models;
 
 namespace VB.Infrastructure.Services
 {
-    public interface IPersistentService
-    {
-        void Saveobject<T>(T obj, string path);
-
-        IModel GetobjById<T>(Guid id, string path);
-
-        void DeleteObjfromData<T>(Guid id, string path);
-
-        void UpdateObjinData<T>(IModel obj, string path);
-    }
-
     public class PersistentService : IPersistentService
     {
         private readonly ISerializer _serializer;
@@ -30,53 +19,89 @@ namespace VB.Infrastructure.Services
             _remoteFile = remoteFile;
         }
 
-
-        public void Saveobject<T>(T obj, string path)
+        /// <summary>
+        /// Add obj in existing objList or create new objList and Add obj
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="path"></param>
+        public void Saveobject(IModel obj, string path)
         {
             
             var str = _remoteFile.ReadFileData(path);
-            List<T> objList;
+            List<IModel> objList;
             if (str == "[]")
             {
-                objList = new List<T> { obj };
+                objList = new List<IModel> { obj };
             }
             else
             {
-                objList = _serializer.DeSerialize<List<T>>(str);
+                objList = _serializer.DeSerialize<List<IModel>>(str);
                 objList.Add(obj);
             }
 
             var objStr = _serializer.Serialize(objList);
             _remoteFile.WriteFileData(path, objStr);
         }
-        public IModel GetobjById<T>(Guid id,string path)
+
+        /// <summary>
+        ///Select object by Id from list of objects  
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public IModel GetobjById(Guid id,string path)
         {
             var str = _remoteFile.ReadFileData(path);
-            var objList = _serializer.DeSerialize<List<T>>(str);
-            var modelList = objList.Where(x => x is IModel)
-               .Cast<IModel>().ToList();
-            var model = _linqService.GetById(id, modelList);
+            var objList = _serializer.DeSerialize<List<IModel>>(str);
+            var model = _linqService.GetById(id, objList);
             return model;
         }
-        public void DeleteObjfromData<T>(Guid id, string path) 
+
+        /// <summary>
+        /// Select object by name from list of objects
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public IModel GetobjByName(string objName, string path)
         {
             var str = _remoteFile.ReadFileData(path);
-            var objList = _serializer.DeSerialize<List<T>>(str);
-            var modelList = objList.Where(x => x is IModel)
-               .Cast<IModel>().ToList();
-            _linqService.DeleteById(id, modelList);
-            var objListStr = _serializer.Serialize(modelList);
+            var objList = _serializer.DeSerialize<List<IModel>>(str);
+            var model = _linqService.GetByName(objName, objList);
+            return model;
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Read all file, get object from it by Id and Delete obj
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="path"></param>
+        public void DeleteObjfromData(Guid id, string path) 
+        {
+            var str = _remoteFile.ReadFileData(path);
+            var objList = _serializer.DeSerialize<List<IModel>>(str);
+            _linqService.DeleteById(id, objList);
+            var objListStr = _serializer.Serialize(objList);
             _remoteFile.WriteFileData(path, objListStr); 
         }
-        public void UpdateObjinData<T>(IModel obj, string path) 
+
+        /// <summary>
+        /// Read all file and update object in it by Id 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="path"></param>
+        public void UpdateObjinData(IModel obj, string path) 
         {
             var str = _remoteFile.ReadFileData(path);
-            var objList = _serializer.DeSerialize<List<T>>(str);
-            var modelList = objList.Where(x => x is IModel)
-                .Cast<IModel>().ToList();
-            _linqService.UpdateById(obj, modelList);
-            var objListStr = _serializer.Serialize(modelList);
-            _remoteFile.WriteFileData(path, objListStr); 
+            var objList = _serializer.DeSerialize<List<IModel>>(str);
+            _linqService.UpdateById(obj, objList);
+            var objListStr = _serializer.Serialize(objList);
+            _remoteFile.WriteFileData(path, objListStr);
         }
     }
 }

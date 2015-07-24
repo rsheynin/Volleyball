@@ -11,7 +11,6 @@ namespace VB.Console.IOC
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-
             container.Register(Component.For<ISerializer>()
                                         .ImplementedBy<Serializer>());
 
@@ -20,6 +19,12 @@ namespace VB.Console.IOC
             
             container.Register(Component.For<IRemoteFile>()
                                         .ImplementedBy<RemoteFile>());
+
+            container.Register(Component.For<IPersistentService>()
+                                        .ImplementedBy<PersistentService>());
+
+            container.Register(Component.For<IIVFManager>()
+                                        .ImplementedBy<IVFManager>());
         }
     }
 }

@@ -19,7 +19,7 @@ namespace VB.Infrastructure.Tests
         private const string SerializedString = "_serializedString";
 
         private IModel _stubModel;
-        private List<IModel> _modelList = new List<IModel>();
+        private readonly List<IModel> _modelList = new List<IModel>();
         private const string Path = "File Path";
         private const string FileEmptyListString = "[]";
 
@@ -28,6 +28,9 @@ namespace VB.Infrastructure.Tests
         {
             _id = Guid.NewGuid();
             _stubModel = MockRepository.GenerateStub<IModel>();
+           
+
+
             _stubSerializer = MockRepository.GenerateStub<ISerializer>();
             _stubLinqService = MockRepository.GenerateStub<ILinqService>();
             _stubRemoteFile = MockRepository.GenerateStub<IRemoteFile>();
@@ -52,7 +55,7 @@ namespace VB.Infrastructure.Tests
                 .DeSerialize<List<IModel>>(FileEmptyListString))
                 .Return(new List<IModel>());
 
-            var actual = _target.GetobjById<IModel>(_id,Path);
+            var actual = _target.GetobjById(_id,Path);
 
             IModel expected = null;
             Assert.AreEqual(expected,actual);
@@ -75,7 +78,7 @@ namespace VB.Infrastructure.Tests
                 .GetById(_id, modelList))
                 .Return(_stubModel);
 
-            var actual = _target.GetobjById<IModel>(_id, Path);
+            var actual = _target.GetobjById(_id, Path);
 
             IModel expected = _stubModel;
             Assert.AreEqual(expected, actual);
@@ -88,16 +91,21 @@ namespace VB.Infrastructure.Tests
                 .Return(StringToDesirialize);
 
             var modelList = new List<IModel> { _stubModel };
-            _stubSerializer.Stub(x => x
+            _stubSerializer.Expect(x => x
                 .DeSerialize<List<IModel>>(StringToDesirialize))
                 .Return(modelList);
 
-               _stubLinqService.Expect(x => x
-                   .DeleteById(_id, modelList));
+               //_stubLinqService.Expect(x => x
+               //    .DeleteById(_id, modelList));
 
-               _target.DeleteObjfromData<IModel>(_id, Path);
+               _target.DeleteObjfromData(_id, Path);
 
-               _stubLinqService.VerifyAllExpectations();
+               //_stubLinqService.VerifyAllExpectations();
+            _stubSerializer.VerifyAllExpectations();
+
+            _stubLinqService.AssertWasCalled(x => x
+                .DeleteById(_id,modelList));
+
         }  
         
         [TestMethod]
@@ -115,7 +123,7 @@ namespace VB.Infrastructure.Tests
                _stubLinqService.Stub(x => x
                    .DeleteById(_id, modelList));
 
-               _target.DeleteObjfromData<IModel>(_id, Path);
+               _target.DeleteObjfromData(_id, Path);
 
                _stubRemoteFile.VerifyAllExpectations();
         }  
@@ -135,7 +143,7 @@ namespace VB.Infrastructure.Tests
                _stubLinqService.Stub(x => x
                    .DeleteById(_id, modelList));
 
-               _target.DeleteObjfromData<IModel>(_id, Path);
+               _target.DeleteObjfromData(_id, Path);
 
                _stubSerializer.VerifyAllExpectations();
         } 
@@ -155,7 +163,7 @@ namespace VB.Infrastructure.Tests
             _stubLinqService.Expect(x => x
                 .UpdateById(_stubModel, modelList));
 
-            _target.UpdateObjinData<IModel>(_stubModel, Path);
+            _target.UpdateObjinData(_stubModel, Path);
 
             _stubLinqService.VerifyAllExpectations();
         }
@@ -175,7 +183,7 @@ namespace VB.Infrastructure.Tests
             _stubLinqService.Stub(x => x
                 .UpdateById(_stubModel, modelList));
 
-            _target.UpdateObjinData<IModel>(_stubModel, Path);
+            _target.UpdateObjinData(_stubModel, Path);
 
             _stubRemoteFile.VerifyAllExpectations();
         }
@@ -195,7 +203,7 @@ namespace VB.Infrastructure.Tests
             _stubLinqService.Stub(x => x
                 .UpdateById(_stubModel, modelList));
 
-            _target.UpdateObjinData<IModel>(_stubModel, Path);
+            _target.UpdateObjinData(_stubModel, Path);
 
             _stubSerializer.VerifyAllExpectations();
         } 
@@ -214,7 +222,7 @@ namespace VB.Infrastructure.Tests
                 .Return(modelList);
 
             _stubRemoteFile.WriteFileData(Path, FileEmptyListString);
-            _target.Saveobject(modelList, Path);
+            _target.Saveobject(_stubModel, Path);
 
             _stubRemoteFile.VerifyAllExpectations();
         } 

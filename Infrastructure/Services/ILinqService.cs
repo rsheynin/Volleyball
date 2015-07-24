@@ -7,7 +7,7 @@ namespace VB.Infrastructure.Services
     public interface ILinqService
     {
         /// <summary>
-        /// Get object by Id from colection
+        /// Get object by Id from collection
         /// </summary>
         /// <param name="id"></param>
         /// <param name="objList"></param>
@@ -22,7 +22,7 @@ namespace VB.Infrastructure.Services
         void DeleteById(Guid id, List<IModel> objList);
 
         /// <summary>
-        /// Update concrete objec by id 
+        /// Update concrete object by id 
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="objList"></param>
@@ -34,5 +34,13 @@ namespace VB.Infrastructure.Services
         /// <param name="obj"></param>
         /// <param name="objList"></param>
         void Save(IModel obj, List<IModel> objList);
+
+        /// <summary>
+        /// Get object by name from collection
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="objList"></param>
+        /// <returns></returns>
+        IModel GetByName(string name, List<IModel> objList);
     }
 }

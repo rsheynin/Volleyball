@@ -62,6 +62,7 @@
     <Compile Include="LinqServiceTest.cs" />
     <Compile Include="RemoteFileTest.cs" />
     <Compile Include="PersistentServiceTest.cs" />
+    <Compile Include="IVFManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\VB.Infrastructure.csproj">

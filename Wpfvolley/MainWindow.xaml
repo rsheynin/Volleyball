@@ -1,4 +1,4 @@
-﻿<Window x:Class="Wpfvolley.MainWindow"
+﻿<Window x:Class="VB.Wpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
@@ -135,7 +135,7 @@
         <TextBlock Text=" Player PhoneNumber"
                    HorizontalAlignment="Right"
                    VerticalAlignment="Bottom"
-                   Margin="5"
+                   Margin="0,0,10,5"
                    Grid.Row="6"/>
         <TextBox Grid.Column="1"
                  Grid.Row="6"

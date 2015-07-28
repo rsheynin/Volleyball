@@ -17,6 +17,7 @@ namespace VB.Infrastructure.Tests
         private Guid _id;
         private const string StringToDesirialize = "_stringToDesirialize";
         private const string SerializedString = "_serializedString";
+        private const string objName = "";
 
         private IModel _stubModel;
         private readonly List<IModel> _modelList = new List<IModel>();
@@ -59,7 +60,48 @@ namespace VB.Infrastructure.Tests
 
             IModel expected = null;
             Assert.AreEqual(expected,actual);
+        }  
+        
+        [TestMethod]
+        public void GetobjByName_NameExistInPersistent_ReturnModel()
+        {
+            _stubRemoteFile.Stub(x => x
+                .ReadFileData(Path))
+                .Return(StringToDesirialize);
+
+            _stubSerializer.Stub(x => x
+                .DeSerialize<List<IModel>>(StringToDesirialize))
+                .Return(_modelList);
+
+            _stubLinqService.Stub(x => x
+                .GetByName(objName,_modelList))
+                .Return(_stubModel);
+
+            var actual = _target.GetobjByName(objName,Path);
+
+            IModel expected = _stubModel;
+            Assert.AreEqual(expected,actual);
         }
+        
+        
+        [TestMethod]
+        public void GetobjList_ListExistInPersistent_ReturnModelList()
+        {
+            _stubRemoteFile.Stub(x => x
+                .ReadFileData(Path))
+                .Return(StringToDesirialize);
+
+            _stubSerializer.Stub(x => x
+                .DeSerialize<List<IModel>>(StringToDesirialize))
+                .Return(_modelList);
+
+            var actual = _target.GetObjectList(Path);
+
+            var expected = _modelList;
+            Assert.AreEqual(expected,actual);
+        }
+
+
 
         [TestMethod]
         public void GetobjById_IDExistInPersistent_ReturnModel()

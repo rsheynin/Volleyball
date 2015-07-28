@@ -1,4 +1,7 @@
-﻿namespace VB.Infrastructure.Services
+﻿using System.Collections.Generic;
+using VB.Infrastructure.Models;
+
+namespace VB.Infrastructure.Services
 {
     /// <summary>
     /// 
@@ -11,7 +14,7 @@
         /// <typeparam name="T"></typeparam>
         /// <param name="objStr"></param>
         /// <returns></returns>
-        T DeSerialize<T>(string objStr);
+        List<IModel> DeSerialize<T>(string objStr);
 
         /// <summary>
         /// Convert Object to String

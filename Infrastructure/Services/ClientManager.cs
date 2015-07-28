@@ -17,7 +17,6 @@ namespace VB.Infrastructure.Services
         public ClientManager(IIVFManager ivfManager)
         {
             _ivfManager = ivfManager;
-
         }
 
         /// <exception cref="IOException">An I/O error occurred. </exception>
@@ -52,7 +51,6 @@ namespace VB.Infrastructure.Services
             return player;
         }
 
-
         /// <exception cref="IOException">An I/O error occurred. </exception>
         /// <exception cref="OutOfMemoryException">There is insufficient memory to allocate a buffer for the returned string. </exception>
         /// <exception cref="FormatException"><paramref name="value" /> does not consist of an optional sign followed by a sequence of digits (0 through 9). </exception>
@@ -71,6 +69,7 @@ namespace VB.Infrastructure.Services
 
             return team;
         }
+
         /// <summary>
         /// Create Match By Client Data
         /// </summary>
@@ -91,6 +90,9 @@ namespace VB.Infrastructure.Services
             return match;
         }
 
+        /// <exception cref="OverflowException"><paramref name="value" /> represents a number that is less than <see cref="F:System.Int32.MinValue" /> or greater than <see cref="F:System.Int32.MaxValue" />. </exception>
+        /// <exception cref="IOException">An I/O error occurred. </exception>
+        /// <exception cref="OutOfMemoryException">There is insufficient memory to allocate a buffer for the returned string. </exception>
         public MatchResult CreateResultByClientData(Guid matchId)
         {
             Console.WriteLine("Enter Team Name, please");
@@ -123,13 +125,10 @@ namespace VB.Infrastructure.Services
 
         /// <exception cref="IOException">An I/O error occurred. </exception>
         /// <exception cref="OutOfMemoryException">There is insufficient memory to allocate a buffer for the returned string. </exception>
-        public Coach CreateCoachByClientData()
+        public Coach CreateCoachByClientData(Guid teamId)
         {
             Console.WriteLine("Enter Full Coach Name, please");
             var name = Console.ReadLine();
-
-            Console.WriteLine("Enter Coach Team, please");
-            var teamname = Console.ReadLine();
 
             Console.WriteLine("Enter Coach e-mail address  , please");
             var email = Console.ReadLine();
@@ -137,7 +136,7 @@ namespace VB.Infrastructure.Services
             Console.WriteLine("Enter Coach phonenumber, please");
             var phonenumber = Console.ReadLine();
 
-            var coach= _ivfManager.DeclareCoach (name, teamname, email, phonenumber);
+            var coach= _ivfManager.DeclareCoach (name, teamId, email, phonenumber);
 
             return coach;
 

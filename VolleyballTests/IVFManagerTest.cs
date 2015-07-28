@@ -27,6 +27,7 @@ namespace VB.Infrastructure.Tests
         private readonly Guid _teamid = Guid.NewGuid();
         private IModel _stubModel;
         private Team _team;
+       
 
 
         [TestInitialize]
@@ -315,10 +316,8 @@ namespace VB.Infrastructure.Tests
                 Mail = ""
             };
 
-           
-
              _target.DeclareCoach("", _teamid, "", "");
-          
+
             _stubPersistentService.AssertWasCalled(x=>x.
                 Saveobject(Arg<Coach>.Matches(actualcoach=>CheckCoach(actualcoach,_expectedCoach)), Arg<string>.Is.Same("coach.json")));
         }

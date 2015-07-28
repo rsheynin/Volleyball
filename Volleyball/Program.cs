@@ -27,13 +27,10 @@ namespace VB.Console
             var clientmanager = new ClientManager(ivfmanager);
 
             //clientmanager.CreateMatchByClientData();
-            clientmanager.CreateCoachByClientData();
+            clientmanager.CreateCoachByClientData(new Guid());
 
             //clientmanager.GetMatchById();
             //clientmanager.GetMatchByDate();
-
-
-
             //clientmanager.GetMatchByTeamName();
 
             //var player = clientmanager.CreatePlayerByClientData();

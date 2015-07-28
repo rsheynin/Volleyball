@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using VB.Infrastructure.Models;
 
 namespace VB.Infrastructure.Services
@@ -44,9 +45,17 @@ namespace VB.Infrastructure.Services
         /// <summary>
         /// Select object by name from list of objects
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="objName"></param>
         /// <param name="path"></param>
         /// <returns></returns>
         IModel GetobjByName(string objName, string path);
+
+        /// <summary>
+        /// Select objectList by filename from data
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        List<IModel> GetObjectList(string path);
     }
 }

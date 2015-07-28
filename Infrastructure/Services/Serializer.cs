@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using VB.Infrastructure.Models;
 
 namespace VB.Infrastructure.Services
 {
@@ -7,16 +9,15 @@ namespace VB.Infrastructure.Services
     /// </summary>
     public class Serializer : ISerializer
     {
-
         /// <summary>
         /// Convert string to object
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="objStr"></param>
         /// <returns></returns>
-        public T DeSerialize<T>(string objStr)
+        public List<IModel> DeSerialize<I>(string objStr)
         {
-            var obj = JsonConvert.DeserializeObject<T>(objStr);
+            var obj = JsonConvert.DeserializeObject<IModel>(objStr);
             return obj;
         }
 

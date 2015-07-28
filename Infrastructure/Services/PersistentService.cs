@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using VB.Infrastructure.Models;
@@ -60,7 +60,7 @@ namespace VB.Infrastructure.Services
         /// <summary>
         /// Select object by name from list of objects
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="objName"></param>
         /// <param name="path"></param>
         /// <returns></returns>
         public IModel GetobjByName(string objName, string path)
@@ -71,10 +71,18 @@ namespace VB.Infrastructure.Services
             return model;
         }
 
+        /// <summary>
+        /// Select objectList by filename from data
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns List="IModel"></returns>
+        public List<IModel> GetObjectList(string path)
+        {
+            var str = _remoteFile.ReadFileData(path);
+            List<IModel> objList = _serializer.DeSerialize<List<IModel>>(str);
 
-
-
-
+            return objList;
+        }
 
         /// <summary>
         /// Read all file, get object from it by Id and Delete obj

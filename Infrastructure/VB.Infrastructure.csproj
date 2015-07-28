@@ -50,6 +50,7 @@
     <Compile Include="Services\IVFManager.cs" />
     <Compile Include="Models\Match.cs" />
     <Compile Include="Models\Player.cs" />
+    <Compile Include="Services\Statist.cs" />
     <Compile Include="Statistic\MatchStatistic.cs" />
     <Compile Include="Statistic\PlayerStatistic.cs" />
     <Compile Include="Statistic\Total.cs" />

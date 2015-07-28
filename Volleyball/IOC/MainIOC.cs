@@ -25,6 +25,10 @@ namespace VB.Console.IOC
 
             container.Register(Component.For<IIVFManager>()
                                         .ImplementedBy<IVFManager>());
+
+            container.Register(Component.For<IStatist>()
+                                        .ImplementedBy<Statist>());
+
         }
     }
 }

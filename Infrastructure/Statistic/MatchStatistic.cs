@@ -7,14 +7,14 @@ using VB.Infrastructure.Models;
 
 namespace VB.Infrastructure.Statistic
 {
-    class MatchStatistic
-    {
-        MatchStatistic()
-        {
-            
-           
-        }
+   public class MatchStatistic
+   {
+       public string MatchName;
+       public string MatchPlace;
+       public DateTime MatchDate;
+       public Guid MatchId;
+       public List<int> SetResults;
 
-
+       
     }
 }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Security.AccessControl;
-using System.Security.Cryptography.X509Certificates;
 using VB.Infrastructure.Models;
 
 namespace VB.Infrastructure.Services

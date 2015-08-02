@@ -15,7 +15,7 @@ namespace VB.Infrastructure.Tests
     [TestClass]
     public class IVFManagerTest
     {
-
+       
         private IVFManager _target;
         private IPersistentService _stubPersistentService;
 
@@ -25,6 +25,7 @@ namespace VB.Infrastructure.Tests
         private Coach _expectedCoach;
 
         private readonly Guid _teamid = Guid.NewGuid();
+        private readonly Guid _matchid = Guid.NewGuid();
         private IModel _stubModel;
         private Team _team;
        
@@ -33,8 +34,13 @@ namespace VB.Infrastructure.Tests
         [TestInitialize]
         public void InIt()
         {
+            
             _stubModel = MockRepository.GenerateStub<IModel>();
             _stubModel.Id = _teamid;
+            _stubModel.Id = _matchid;
+            _stubPersistentService = MockRepository.GenerateStub<IPersistentService>();
+            _target = new IVFManager(_stubPersistentService);
+            
 
         }
 
@@ -246,11 +252,11 @@ namespace VB.Infrastructure.Tests
             _expectedresult = new MatchResult()
             {
                 Name = "",
-                MatchId = Guid.NewGuid(),
+                MatchId = _matchid,
                 SetResults = null
             };
 
-            var actual = _target.DeclareResult("", new Guid(), null);
+            var actual = _target.DeclareResult("", _matchid, null);
             Assert.AreEqual(_expectedresult.Name, actual.Name);
             Assert.AreEqual(_expectedresult.MatchId, actual.MatchId);
             Assert.AreEqual(_expectedresult.SetResults, actual.SetResults);
@@ -264,11 +270,11 @@ namespace VB.Infrastructure.Tests
             _expectedresult = new MatchResult()
             {
                 Name = "",
-                MatchId = Guid.NewGuid(),
+                MatchId = _matchid,
                 SetResults = null
             };
 
-            _target.DeclareResult("", new Guid(), null);
+            _target.DeclareResult("",_matchid, null);
 
             _stubPersistentService.AssertWasCalled(x => x.
                 Saveobject(Arg<MatchResult>.Matches(actualresult => CheckResult(actualresult, _expectedresult)),
@@ -297,13 +303,14 @@ namespace VB.Infrastructure.Tests
                Mail = ""
             };
 
+            
+
+
             var actual = _target.DeclareCoach("", _teamid, "", "");
             Assert.AreEqual(_expectedCoach.Name, actual.Name);
             Assert.AreEqual(_expectedCoach.PhoneNumber, actual.PhoneNumber);
             Assert.AreEqual(_expectedCoach.Mail, actual.Mail);
         }
-
-
 
         [TestMethod]
         public void DeclareCoach_Saveobject_Coach()

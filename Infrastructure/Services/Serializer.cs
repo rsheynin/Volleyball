@@ -15,9 +15,9 @@ namespace VB.Infrastructure.Services
         /// <typeparam name="T"></typeparam>
         /// <param name="objStr"></param>
         /// <returns></returns>
-        public List<IModel> DeSerialize<I>(string objStr)
+        public T DeSerialize<T>(string objStr)
         {
-            var obj = JsonConvert.DeserializeObject<IModel>(objStr);
+            var obj = JsonConvert.DeserializeObject<T>(objStr);
             return obj;
         }
 

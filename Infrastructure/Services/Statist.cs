@@ -20,19 +20,24 @@ namespace VB.Infrastructure.Services
         }
 
 
-//        public List<MatchStatistic> GetMatchStatistic()
-//        {
-//            var matchList = _persistentService.GetObjectList("match.json");
-//
-//            var matchResultList = _persistentService.GetObjectList("matchResult.json");
-//
-////            var matchStatistic = from a in matchList
-////                join b in matchResultList on a.Id equals b.Id
-////                select new {a.Id, a.Name, a.Place, a.Date, b.SetResults};  
-////
-////            return matchStatistic;
-////            
-//        }
+        public IEnumerable<MatchStatistic> GetMatchStatistic()
+        {
+            var matchList = _persistentService.GetObjectList<List<Match>>("match.json"); 
+            var resultList = _persistentService.GetObjectList<List<MatchResult>>("result.json");
+
+            var matchStatistic = from match in matchList 
+                                 join result in resultList on match.Id equals result.MatchId 
+                                 select new MatchStatistic{
+                                     MatchId = match.Id,
+                                     MatchPlace = match.Place,
+                                     MatchName = match.Name,
+                                     MatchDate = match.Date,
+                                     SetResults = result.SetResults
+            };
+
+            return matchStatistic;
+
+        }
 
     }
 }

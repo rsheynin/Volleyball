@@ -76,10 +76,10 @@ namespace VB.Infrastructure.Services
         /// </summary>
         /// <param name="path"></param>
         /// <returns List="IModel"></returns>
-        public List<IModel> GetObjectList(string path)
+        public T GetObjectList<T>(string path)
         {
             var str = _remoteFile.ReadFileData(path);
-            List<IModel> objList = _serializer.DeSerialize<List<IModel>>(str);
+            var objList = _serializer.DeSerialize<T>(str);
 
             return objList;
         }

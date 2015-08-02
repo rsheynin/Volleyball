@@ -26,6 +26,7 @@ namespace VB.Infrastructure.Services
         /// </summary>
         /// <param name="path"></param>
         /// <param name="content"></param>
+        /// <exception cref="DirectoryNotFoundException">The specified path is invalid (for example, it is on an unmapped drive). </exception>
         public void WriteFileData(string path, string content)
         {
             File.WriteAllText(path, content);

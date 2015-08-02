@@ -95,7 +95,7 @@ namespace VB.Infrastructure.Tests
                 .DeSerialize<List<IModel>>(StringToDesirialize))
                 .Return(_modelList);
 
-            var actual = _target.GetObjectList(Path);
+            var actual = _target.GetObjectList<List<IModel>>(Path);
 
             var expected = _modelList;
             Assert.AreEqual(expected,actual);

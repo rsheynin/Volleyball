@@ -10,6 +10,5 @@ namespace VB.Infrastructure.Models
 
         public Guid MatchId;
         public List<int> SetResults;
-
     }
 }

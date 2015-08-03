@@ -43,4 +43,6 @@ namespace VB.Infrastructure.Services
         /// <returns></returns>
         IModel GetByName(string name, List<IModel> objList);
     }
+
+
 }

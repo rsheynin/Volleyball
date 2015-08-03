@@ -5,7 +5,7 @@ namespace VB.Infrastructure.Services
     /// <summary>
     /// 
     /// </summary>
-    public class RemoteFile: IRemoteFile
+    public class  RemoteFile: IRemoteFile
     {
         /// <summary>
         /// Read the string content of the file by path

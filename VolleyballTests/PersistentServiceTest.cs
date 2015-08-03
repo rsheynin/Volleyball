@@ -21,6 +21,8 @@ namespace VB.Infrastructure.Tests
 
         private IModel _stubModel;
         private readonly List<IModel> _modelList = new List<IModel>();
+        private readonly List<TeamPlayers> _teamPlayersList = new List<TeamPlayers>();
+        private TeamPlayers _stubTeamPlayers;
         private const string Path = "File Path";
         private const string FileEmptyListString = "[]";
 
@@ -29,8 +31,8 @@ namespace VB.Infrastructure.Tests
         {
             _id = Guid.NewGuid();
             _stubModel = MockRepository.GenerateStub<IModel>();
+            _stubTeamPlayers = MockRepository.GenerateStub<TeamPlayers>();
            
-
 
             _stubSerializer = MockRepository.GenerateStub<ISerializer>();
             _stubLinqService = MockRepository.GenerateStub<ILinqService>();
@@ -298,7 +300,48 @@ namespace VB.Infrastructure.Tests
 
         }
 
+        [TestMethod]
+        public void SaveTeamPlayers_FileIsEmptySaveInNew()
+        {
+            _stubRemoteFile.Expect(x => x
+               .ReadFileData(Path))
+               .Return(FileEmptyListString);
 
+            var teamPlayersList = new List<TeamPlayers> { _stubTeamPlayers };
+
+            _stubSerializer.Stub(x => x
+                .DeSerialize<List<TeamPlayers>>(FileEmptyListString))
+                .Return(teamPlayersList);
+
+            _stubRemoteFile.WriteFileData(Path, FileEmptyListString);
+            _target.Saveobject(_stubTeamPlayers, Path);
+
+            _stubRemoteFile.VerifyAllExpectations();
+        }
+
+         [TestMethod]
+        public void SaveTeamPlayers_FileExist_AddToFile()
+        {
+            _stubRemoteFile.Expect(x => x
+               .ReadFileData(Path))
+               .Return(FileEmptyListString);
+
+            _stubSerializer.Expect(x => x
+               .DeSerialize<List<TeamPlayers>>(StringToDesirialize))
+               .Return(_teamPlayersList);
+
+            _teamPlayersList.Add(_stubTeamPlayers);
+
+            _stubSerializer.Stub(x => x
+                .Serialize(_teamPlayersList))
+                .Return(SerializedString);
+
+            _target.Saveobject(_stubTeamPlayers, Path);
+
+            _stubRemoteFile.AssertWasCalled(x => x
+                .WriteFileData(Path, SerializedString));
+        }
+        
         // ReadFileData
         // Serialize
         // WriteFileData

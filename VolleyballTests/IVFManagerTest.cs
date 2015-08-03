@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Net.Mail;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
 using VB.Infrastructure.Models;

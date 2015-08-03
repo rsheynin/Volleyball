@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\MatchResult.cs" />
+    <Compile Include="Models\Season.cs" />
     <Compile Include="Services\ClientManager.cs" />
     <Compile Include="Models\Coach.cs" />
     <Compile Include="Models\IModel.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Services\PersistentService.cs" />
     <Compile Include="Services\RemoteFile.cs" />
     <Compile Include="Services\Serializer.cs" />
+    <Compile Include="Models\TeamPlayers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,7 +1,8 @@
 ﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
-using VB.Infrastructure.Models;
+ using VB.Infrastructure.DTO;
+ using VB.Infrastructure.Models;
 
 namespace VB.Infrastructure.Services
 {
@@ -83,6 +84,8 @@ namespace VB.Infrastructure.Services
         public T GetObjectList<T>(string path)
         {
             var str = _remoteFile.ReadFileData(path);
+
+
             var objList = _serializer.DeSerialize<T>(str);
 
             return objList;
@@ -145,6 +148,38 @@ namespace VB.Infrastructure.Services
             }
 
             var objStr = _serializer.Serialize(teamPlayersList);
+            _remoteFile.WriteFileData(path, objStr);
+        }
+
+        public void SaveDTOobject(PlayerDTO obj, string path)
+        {
+
+            var str = _remoteFile.ReadFileData(path);
+            List<Player> playerList;
+            var player = new Player()
+            {
+                Id = Guid.NewGuid(),
+                Name = obj.Name,
+                Age = obj.Age,
+                Amplua = obj.Amplua,
+                Height = obj.Height,
+                Number = obj.Number,
+                Mail = obj.Mail,
+                PhoneNumber = obj.PhoneNumber,
+                Date = DateTime.Now
+
+            };
+            if (str == "[]")
+            {
+                playerList = new List<Player> { player };
+            }
+            else
+            {
+                playerList = _serializer.DeSerialize<List<Player>>(str);
+                playerList.Add(player);
+            }
+
+            var objStr = _serializer.Serialize(playerList);
             _remoteFile.WriteFileData(path, objStr);
         }
 

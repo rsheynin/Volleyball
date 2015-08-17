@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using VB.Infrastructure.DTO;
 using VB.Infrastructure.Models;
 
 namespace VB.Infrastructure.Services
@@ -61,5 +62,12 @@ namespace VB.Infrastructure.Services
         /// <param name="path"></param>
         /// <returns List="IModel"></returns>
         List<IModel> GetObjectList(string path);
+
+        /// <summary>
+        /// Save DTOobject 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns List="IModel"></returns>
+        void SaveDTOobject(PlayerDTO obj, string path);
     }
 }

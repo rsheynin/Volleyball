@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Rhino.Mocks;
+using VB.Infrastructure.DTO;
 using VB.Infrastructure.Models;
 using VB.Infrastructure.Services;
 
@@ -11,20 +14,29 @@ namespace VB.Infrastructure.Tests
     public class PersistentServiceTest
     {
         private PersistentService _target;
+        private IPersistentService _stubPersistentService;
         private ISerializer _stubSerializer;
         private ILinqService _stubLinqService;
         private IRemoteFile _stubRemoteFile;
         private Guid _id;
+        private DateTime _date;
         private const string StringToDesirialize = "_stringToDesirialize";
-        private const string SerializedString = "_serializedString";
+        private const string SerializedstringPlayerList = SERIALIZEDSTRING_PLAYER_LIST;
+        private const string SERIALIZED_STRING = "_serializedString";
         private const string objName = "";
-
+        
         private IModel _stubModel;
         private readonly List<IModel> _modelList = new List<IModel>();
         private readonly List<TeamPlayers> _teamPlayersList = new List<TeamPlayers>();
+        private readonly List<PlayerDTO> _playerDtoList = new List<PlayerDTO>();
+        private readonly List<Player> _playerList = new List<Player>();
         private TeamPlayers _stubTeamPlayers;
+        private Player _stubPlayer;
+        private PlayerDTO _stubDtoPlayer;
         private const string Path = "File Path";
-        private const string FileEmptyListString = "[]";
+        private const string FILE_EMPTY_LIST_STRING = "[]";
+        private const string SERIALIZEDSTRING_PLAYER_LIST = "serializedstringPlayerList";
+        private const string PLAYER_JSON_FILE_P_ATH = "player.json";
 
         [TestInitialize]
         public void InIt()
@@ -32,11 +44,13 @@ namespace VB.Infrastructure.Tests
             _id = Guid.NewGuid();
             _stubModel = MockRepository.GenerateStub<IModel>();
             _stubTeamPlayers = MockRepository.GenerateStub<TeamPlayers>();
-           
+            _stubDtoPlayer = MockRepository.GenerateStub<PlayerDTO>();
+            _stubPlayer = MockRepository.GenerateStub<Player>();
 
             _stubSerializer = MockRepository.GenerateStub<ISerializer>();
             _stubLinqService = MockRepository.GenerateStub<ILinqService>();
             _stubRemoteFile = MockRepository.GenerateStub<IRemoteFile>();
+            _stubPersistentService = MockRepository.GenerateStub<IPersistentService>();
             _target = new PersistentService(_stubSerializer,
                 _stubLinqService,_stubRemoteFile);
         }
@@ -52,10 +66,10 @@ namespace VB.Infrastructure.Tests
         {
             _stubRemoteFile.Stub(x => x
                 .ReadFileData(Path))
-                .Return(FileEmptyListString);
+                .Return(FILE_EMPTY_LIST_STRING);
 
             _stubSerializer.Stub(x => x
-                .DeSerialize<List<IModel>>(FileEmptyListString))
+                .DeSerialize<List<IModel>>(FILE_EMPTY_LIST_STRING))
                 .Return(new List<IModel>());
 
             var actual = _target.GetobjById(_id,Path);
@@ -84,8 +98,7 @@ namespace VB.Infrastructure.Tests
             IModel expected = _stubModel;
             Assert.AreEqual(expected,actual);
         }
-        
-        
+         
         [TestMethod]
         public void GetobjList_ListExistInPersistent_ReturnModelList()
         {
@@ -102,8 +115,6 @@ namespace VB.Infrastructure.Tests
             var expected = _modelList;
             Assert.AreEqual(expected,actual);
         }
-
-
 
         [TestMethod]
         public void GetobjById_IDExistInPersistent_ReturnModel()
@@ -257,15 +268,15 @@ namespace VB.Infrastructure.Tests
         {
             _stubRemoteFile.Expect(x => x
                 .ReadFileData(Path))
-                .Return(FileEmptyListString);
+                .Return(FILE_EMPTY_LIST_STRING);
 
             var modelList = new List<IModel> { _stubModel };
 
-            _stubSerializer    .Stub(x => x
-                .DeSerialize<List<IModel>>(FileEmptyListString))
+            _stubSerializer.Stub(x => x
+                .DeSerialize<List<IModel>>(FILE_EMPTY_LIST_STRING))
                 .Return(modelList);
 
-            _stubRemoteFile.WriteFileData(Path, FileEmptyListString);
+            _stubRemoteFile.WriteFileData(Path, FILE_EMPTY_LIST_STRING);
             _target.Saveobject(_stubModel, Path);
 
             _stubRemoteFile.VerifyAllExpectations();
@@ -288,7 +299,7 @@ namespace VB.Infrastructure.Tests
 
             _stubSerializer.Stub(x => x
                 .Serialize(_modelList))
-                .Return(SerializedString);
+                .Return(SERIALIZED_STRING);
 
             //_stubRemoteFile.Stub(x => x
             //    .WriteFileData(Path, SerializedString));
@@ -296,7 +307,7 @@ namespace VB.Infrastructure.Tests
             _target.Saveobject(_stubModel, Path);
 
             _stubRemoteFile.AssertWasCalled(x => x
-                .WriteFileData(Path, SerializedString));
+                .WriteFileData(Path, SERIALIZED_STRING));
 
         }
 
@@ -305,15 +316,15 @@ namespace VB.Infrastructure.Tests
         {
             _stubRemoteFile.Expect(x => x
                .ReadFileData(Path))
-               .Return(FileEmptyListString);
+               .Return(FILE_EMPTY_LIST_STRING);
 
             var teamPlayersList = new List<TeamPlayers> { _stubTeamPlayers };
 
             _stubSerializer.Stub(x => x
-                .DeSerialize<List<TeamPlayers>>(FileEmptyListString))
+                .DeSerialize<List<TeamPlayers>>(FILE_EMPTY_LIST_STRING))
                 .Return(teamPlayersList);
 
-            _stubRemoteFile.WriteFileData(Path, FileEmptyListString);
+            _stubRemoteFile.WriteFileData(Path, FILE_EMPTY_LIST_STRING);
             _target.Saveobject(_stubTeamPlayers, Path);
 
             _stubRemoteFile.VerifyAllExpectations();
@@ -324,7 +335,7 @@ namespace VB.Infrastructure.Tests
         {
             _stubRemoteFile.Expect(x => x
                .ReadFileData(Path))
-               .Return(FileEmptyListString);
+               .Return(FILE_EMPTY_LIST_STRING);
 
             _stubSerializer.Expect(x => x
                .DeSerialize<List<TeamPlayers>>(StringToDesirialize))
@@ -334,49 +345,148 @@ namespace VB.Infrastructure.Tests
 
             _stubSerializer.Stub(x => x
                 .Serialize(_teamPlayersList))
-                .Return(SerializedString);
+                .Return(SERIALIZED_STRING);
 
             _target.Saveobject(_stubTeamPlayers, Path);
 
             _stubRemoteFile.AssertWasCalled(x => x
-                .WriteFileData(Path, SerializedString));
+                .WriteFileData(Path, SERIALIZED_STRING));
         }
-        
-        // ReadFileData
-        // Serialize
-        // WriteFileData
+
+         [TestMethod]
+         public void SaveDTOobject_FileIsEmptySaveInNew()
+         {
+             _stubRemoteFile.Stub(x => x
+              .ReadFileData(Path))
+              .Return(FILE_EMPTY_LIST_STRING);
+
+           
+             _stubDtoPlayer = new PlayerDTO()
+             {
+                 Name = "",
+                 Age = 0,
+                 Amplua = "",
+                 Height = 0,
+                 Number = 0,
+                 Mail = "",
+                 PhoneNumber = ""
+             };
+             var expectedPlayersList = new List<Player>();
+             _stubPlayer = new Player()
+             {
+                 Name = _stubDtoPlayer.Name,
+                 Age = _stubDtoPlayer.Age,
+                 Amplua = _stubDtoPlayer.Amplua,
+                 Height = _stubDtoPlayer.Height,
+                 Number = _stubDtoPlayer.Number,
+                 Mail = _stubDtoPlayer.Mail,
+                 PhoneNumber = _stubDtoPlayer.PhoneNumber
+             };             
+              expectedPlayersList.Add(_stubPlayer);
+
+             _stubSerializer.Stub(x => x
+                 .Serialize(Arg<List<Player>>.Matches(actualPlayers => 
+                     CheckPlayers(actualPlayers, expectedPlayersList))))
+               .Return(SERIALIZEDSTRING_PLAYER_LIST);
+
+              _target.SaveDTOobject(_stubDtoPlayer,Path);
 
 
-        // ReadFileData
-        // DeSerialize
-        // Serialize
-        // WriteFileData
+             //In this case is same
+              _stubRemoteFile.AssertWasCalled(x => x
+                  .WriteFileData(Path, SERIALIZEDSTRING_PLAYER_LIST));
+             //_stubRemoteFile.AssertWasCalled(x => x
+             //     .WriteFileData(Arg<string>.Is.Equal(PLAYER_JSON_FILE_P_ATH),
+             //     Arg<string>.Is.Equal(SERIALIZEDSTRING_PLAYER_LIST)));
+
+             
+         }
+
+        private bool CheckPlayers(List<Player> actualPlayers, List<Player> expectedPlayersList)
+        {
+            Assert.AreEqual(expectedPlayersList.Count,actualPlayers.Count);
+            for (int i = 0; i < actualPlayers.Count; i++)
+            {
+                Assert.AreEqual(expectedPlayersList.ElementAt(i).Name, actualPlayers.ElementAt(i).Name);
+                Assert.AreEqual(expectedPlayersList.ElementAt(i).Age, actualPlayers.ElementAt(i).Age);
+                Assert.AreEqual(expectedPlayersList.ElementAt(i).Amplua, actualPlayers.ElementAt(i).Amplua);
+                Assert.AreEqual(expectedPlayersList.ElementAt(i).Height, actualPlayers.ElementAt(i).Height);
+                Assert.AreEqual(expectedPlayersList.ElementAt(i).Number, actualPlayers.ElementAt(i).Number);
+                Assert.AreEqual(expectedPlayersList.ElementAt(i).Mail, actualPlayers.ElementAt(i).Mail);
+                Assert.AreEqual(expectedPlayersList.ElementAt(i).PhoneNumber, actualPlayers.ElementAt(i).PhoneNumber);
+                
+              
+            }
+            return true;
+        }
+
+   
+
+         [TestMethod]
+         public void SaveDTOobject_FileExist_AddToFile()
+         {
+             _stubRemoteFile.Stub(x => x
+              .ReadFileData(Path))
+              .Return(StringToDesirialize);
+
+             _stubDtoPlayer = new PlayerDTO()
+             {
+                 Name = "",
+                 Age = 0,
+                 Amplua = "",
+                 Height = 0,
+                 Number = 0,
+                 Mail = "",
+                 PhoneNumber = ""
+             };
+           
+             _stubPlayer = new Player()
+             {
+                 Name = _stubDtoPlayer.Name,
+                 Age = _stubDtoPlayer.Age,
+                 Amplua = _stubDtoPlayer.Amplua,
+                 Height = _stubDtoPlayer.Height,
+                 Number = _stubDtoPlayer.Number,
+                 Mail = _stubDtoPlayer.Mail,
+                 PhoneNumber = _stubDtoPlayer.PhoneNumber
+             };
+            
+             _stubSerializer.Stub(x => x
+                .DeSerialize<List<Player>>(StringToDesirialize))
+                .Return(_playerList);
+
+             _playerList.Add(_stubPlayer);
+
+             _stubSerializer.Stub(x => x
+                   .Serialize(Arg<List<Player>>.Matches(actualPlayers =>
+                       CheckPlayers(actualPlayers, _playerList))))
+                 .Return(SERIALIZEDSTRING_PLAYER_LIST);
+
+             _target.SaveDTOobject(_stubDtoPlayer, Path);
+
+            
+             _stubRemoteFile.AssertWasCalled(x => x
+                 .WriteFileData(Path, SERIALIZEDSTRING_PLAYER_LIST));
+            
+         }
+
+         private bool CheckPlayers_fileExist(List<Player> actualPlayers, List<Player> __playerList)
+         {
+             Assert.AreEqual(_playerList.Count, actualPlayers.Count);
+             for (int i = 0; i < actualPlayers.Count; i++)
+             {
+                 Assert.AreEqual(_playerList.ElementAt(i).Name, actualPlayers.ElementAt(i).Name);
+                 Assert.AreEqual(_playerList.ElementAt(i).Age, actualPlayers.ElementAt(i).Age);
+                 Assert.AreEqual(_playerList.ElementAt(i).Amplua, actualPlayers.ElementAt(i).Amplua);
+                 Assert.AreEqual(_playerList.ElementAt(i).Height, actualPlayers.ElementAt(i).Height);
+                 Assert.AreEqual(_playerList.ElementAt(i).Number, actualPlayers.ElementAt(i).Number);
+                 Assert.AreEqual(_playerList.ElementAt(i).Mail, actualPlayers.ElementAt(i).Mail);
+                 Assert.AreEqual(_playerList.ElementAt(i).PhoneNumber, actualPlayers.ElementAt(i).PhoneNumber);
 
 
-//        [TestMethod]
-//        public void Saveobject_FileExist()
-//        {
-//            string str = _stringToDesirialize;
-//
-//            _stubRemoteFile.Stub(x => x
-//                           .ReadFileData(Path))
-//                           .Return(str);
-//
-//            _stubSerializer.Stub(x => x
-//                .DeSerialize<>(str))
-//                .Return(objList);
-//
-//
-//            _stubSerializer.Stub(x => x
-//               .Serialize(objList))
-//               .Return(objString);
-//
-//            _target.Saveobject(_stubModel,Path);
-//
-//            _stubRemoteFile.AssertWasCalled(x => x
-//              .WriteFileData(Path, "SerializedObj"));
-//        }
-
+             }
+             return true;
+         }
 
     }
 }

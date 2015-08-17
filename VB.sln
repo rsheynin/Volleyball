@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VB.Infrastructure", "Infras
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VB.Wpf", "Wpfvolley\VB.Wpf.csproj", "{51B431CC-100B-4AC1-9F56-614D090F89C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VB_JS", "..\..\..\..\..\..\Rom\Documents\Visual Studio 2013\Projects\VB_JS\VB_JS\VB_JS.csproj", "{690270C6-A499-42F5-892B-B8D830C80783}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VB.Infrastructure.IoC", "VB.Infrastructure.IoC\VB.Infrastructure.IoC.csproj", "{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,26 @@ Global
 		{51B431CC-100B-4AC1-9F56-614D090F89C3}.Release|ARM.ActiveCfg = Release|Any CPU
 		{51B431CC-100B-4AC1-9F56-614D090F89C3}.Release|x64.ActiveCfg = Release|Any CPU
 		{51B431CC-100B-4AC1-9F56-614D090F89C3}.Release|x86.ActiveCfg = Release|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Release|ARM.ActiveCfg = Release|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Release|x64.ActiveCfg = Release|Any CPU
+		{690270C6-A499-42F5-892B-B8D830C80783}.Release|x86.ActiveCfg = Release|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Release|x64.ActiveCfg = Release|Any CPU
+		{5F246CAE-1AC3-473C-9E7E-3AFB23F02710}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
